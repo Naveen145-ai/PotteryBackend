@@ -20,7 +20,4 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1', authRoute);
 app.use('/api/v1', potRoute);
-app.listen(PORT,()=>{
-    console.log("Server is running in the port 5000");
-    
-})
+app.listen(PORT, "0.0.0.0", () => console.log("Server running"));

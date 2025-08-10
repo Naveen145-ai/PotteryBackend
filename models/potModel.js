@@ -17,9 +17,7 @@ const potSchema = new mongoose.Schema({
         type: String, required: true, trim: true
     },
 
-    createdAt: {
-        type: Date, default: Date.now
-    },
+   
 })
 
 const potModel = mongoose.model('Pot', potSchema);
