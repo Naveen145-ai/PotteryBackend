@@ -1,6 +1,6 @@
 const potModel = require('../models/potModel');
 
-// Add Pot with image URL
+// Add Pot
 exports.addPot = async (req, res) => {
     try {
         const { name, category, price, description, image } = req.body;
@@ -19,14 +19,16 @@ exports.addPot = async (req, res) => {
 };
 
 exports.getAllPots = async (req, res) => {
-    try {
-        const pots = await potModel.find();
-        res.status(200).json({ pots });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+  try {
+    const pots = await potModel.find();
+    res.status(200).json({ success: true, pots });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
+
+// Update Pot
 exports.updatePot = async (req, res) => {
     const { id } = req.params;
     const { name, category, price, description, image } = req.body;
@@ -48,6 +50,7 @@ exports.updatePot = async (req, res) => {
     }
 };
 
+// Delete Pot
 exports.deletePot = async (req, res) => {
     const { id } = req.params;
 
