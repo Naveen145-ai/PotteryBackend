@@ -2,20 +2,21 @@ const potModel = require('../models/potModel');
 
 // Add Pot
 exports.addPot = async (req, res) => {
-    try {
-        const { name, category, price, description, image } = req.body;
+  try {
+    const { name, category, price, description, image } = req.body;
+    if (!image) return res.status(400).json({ success: false, message: "Image URL is required" });
 
-        if (!image) {
-            return res.status(400).json({ success: false, message: "Image URL is required" });
-        }
+    const pot = new potModel({ name, category, price, description, image });
+    await pot.save();
 
-        const pot = new potModel({ name, category, price, description, image });
-        await pot.save();
+    // Emit real-time notification
+    const io = req.app.get('io');
+    io.emit('newPot', { name, category, price, description, image });
 
-        res.status(201).json({ success: true, pot });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+    res.status(201).json({ success: true, pot });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
 exports.getAllPots = async (req, res) => {
