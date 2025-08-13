@@ -8,6 +8,7 @@ const cors = require('cors');
 const connectDataBase = require('./config/connectDataBase');
 const authRoute = require('./routes/authRoute');
 const potRoute = require('./routes/potRoute');
+const orderRoute = require('./routes/orderRoutes');
 
 dotenv.config({ path: path.join(__dirname, 'config', 'config.env') });
 
@@ -33,7 +34,7 @@ app.set('io', io);
 // Routes
 app.use('/api/v1', authRoute);
 app.use('/api/v1', potRoute);
-
+app.use('/api/v1', orderRoute);
 // Socket.IO connection
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
